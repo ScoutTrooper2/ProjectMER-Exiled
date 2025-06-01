@@ -1,4 +1,4 @@
-# Note: This is WIP project of MapEditorReborn for LabAPI. Join discord for more info.
+
 
 [![MapEditorReborn](https://i.imgur.com/CeemJnt.png)](https://discord.gg/JwAfeSd79u)
 
