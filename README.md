@@ -29,6 +29,7 @@ Once your plugin will load, it will create directory `EXILED/Configs/MapEditorRe
 - Add HintServiceMeow Support (You need to download that)
 - Changed RoomName in Schematics to RoomType (Breaking changes, that brokes old maps)
 - Added Exiled.CustomItems support
+- Added property "IsDisabled" for doors. If that propertie == true, then opening door is impossible
 
 # Credits
 - Original Plugin made by [Michal78900](https://github.com/Michal78900)
