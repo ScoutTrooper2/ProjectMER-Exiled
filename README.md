@@ -13,7 +13,7 @@
 
 </div>
 
-# Installation
+# Installation 
 Put your `ProjectMER.dll` file in `EXILED/Plugins` path.
 Once your plugin will load, it will create directory `EXILED/Configs/MapEditorReborn`; This directory will contain two sub-directories **Schematics** and **Maps**
 
