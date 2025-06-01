@@ -6,20 +6,29 @@
 <h3 align="center"><a href="https://store.steampowered.com/app/700330/SCP_Secret_Laboratory/">SCP: Secret Laboratory</a> plugin allowing to spawn and modify various objects.</h3>
 <div align="center">
     
-<img src="https://img.shields.io/github/downloads/Michal78900/MapEditorReborn/total?style=for-the-badge&logo=github" alt="Downloads">
+<img src="https://img.shields.io/github/downloads/ScoutTrooper2/ProjectMER-Exiled/total?style=for-the-badge&logo=github" alt="Downloads">
 <a href="https://discord.gg/JwAfeSd79u">
-    <img src="https://img.shields.io/discord/947849283514814486?style=for-the-badge&logo=discord" alt="Chat on Discord">
+    <img src="https://img.shields.io/discord/947849283514814486?style=for-the-badge&logo=discord" alt="Chat on Discord (Original MER)">
 </a>    
 
 </div>
 
 # Installation
-Put your [`MapEditorReborn.dll`](https://github.com/Michal78900/ProjectMER/releases/latest) file in `LabAPI-beta/plugins` path.
-Once your plugin will load, it will create directory `LapAPI-beta/configs/ProjectMER`; This directory will contain two sub-directories **Schematics** and **Maps**
+Put your `ProjectMER.dll` file in `EXILED/Plugins` path.
+Once your plugin will load, it will create directory `EXILED/Configs/MapEditorReborn`; This directory will contain two sub-directories **Schematics** and **Maps**
 
-**[Full MER tutorial](https://docs.google.com/document/d/10V2PnqobeBFb2xTFIHSGmM2KK9_h2wethiVQdcjyhGc/edit?usp=sharing)**
+**More support can be found on a [Discord](https://discord.gg/JwAfeSd79u) server in [Message](https://discord.com/channels/947849283514814486/1378677763099197500)**
 
-**More support can be found on a [Discord](https://discord.gg/JwAfeSd79u) server**
+# Edition (EXILED)
+- Config -> DisableItemDistributor: Manage spawning procedure generated pickups in HCZ (On shelf, cardboxes...)
+- InvisibleTeleport: Invisible Object, but when you press E on project, start animation of picking item, when it finish, player teleport to other teleporters (ThisTeleportID, ToTeleportID, InteractionDuration, IsLocked - Properties)
+- Clutter: Prefab of HCZ RoomConnectors Props
+- Locker: Locker with items
+- PedestalSCP: Pedestal with Scp Items (add modifying string on glass)
+- Changed HUD
+- Add HintServiceMeow Support (You need to download that)
+- Changed RoomName in Schematics to RoomType (Breaking changes, that brokes old maps)
+- Added Exiled.CustomItems support
 
 # Credits
 - Original Plugin made by [Michal78900](https://github.com/Michal78900)
