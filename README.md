@@ -30,6 +30,10 @@ Once your plugin will load, it will create directory `EXILED/Configs/MapEditorRe
 - Changed RoomName in Schematics to RoomType (Breaking changes, that brokes old maps)
 - Added Exiled.CustomItems support
 - Added property "IsDisabled" for doors. If that propertie == true, then opening door is impossible
+- Added Atachments to ItemSpawnPoint
+- Fixed infinite ammo pickup
+- Added Generator Serializable
+
 
 # Credits
 - Original Plugin made by [Michal78900](https://github.com/Michal78900)
