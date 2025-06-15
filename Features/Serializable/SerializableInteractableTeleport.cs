@@ -1,4 +1,5 @@
 ﻿using AdminToys;
+using Exiled.API.Enums;
 using Exiled.API.Features;
 using LabApi.Features.Wrappers;
 using Mirror;
@@ -58,7 +59,6 @@ namespace ProjectMER.Features.Serializable
                 cube.NetworkPrimitiveType = PrimitiveType.Cube;
                 cube.NetworkPrimitiveFlags = PrimitiveFlags.Visible;
                 cube.NetworkMaterialColor = new Color(1f, 1f, 1f, 0.9f);
-                cube.NetworkScale = Scale;
             }
             else
             {
@@ -66,6 +66,10 @@ namespace ProjectMER.Features.Serializable
             }
 
             cube.transform.SetPositionAndRotation(position, rotation);
+            cube.transform.localScale = Scale;
+            cube.NetworkScale = Scale;
+
+            
 
             return cube.gameObject;
         }

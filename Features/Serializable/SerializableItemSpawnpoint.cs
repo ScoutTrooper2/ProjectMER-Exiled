@@ -1,12 +1,20 @@
+using Exiled.API.Enums;
+using Exiled.API.Extensions;
 using Exiled.API.Features;
+using Exiled.API.Features.Items;
 using Exiled.API.Features.Pickups;
+using Exiled.API.Structs;
+using Exiled.CustomItems.API.Features;
+using HarmonyLib;
 using InventorySystem.Items.Firearms.Attachments;
+using InventorySystem.Items.Firearms.Attachments.Components;
 using InventorySystem.Items.Firearms.Modules;
 using InventorySystem.Items.Pickups;
 using MEC;
 using ProjectMER.Events.Handlers.Internal;
 using ProjectMER.Features.Extensions;
 using ProjectMER.Features.Interfaces;
+using System;
 using UnityEngine;
 using PrimitiveObjectToy = AdminToys.PrimitiveObjectToy;
 using Room = Exiled.API.Features.Room;
@@ -18,7 +26,8 @@ public class SerializableItemSpawnpoint : SerializableObject, IIndicatorDefiniti
 	public ItemType ItemType { get; set; } = ItemType.Lantern;
 	public uint CustomItem { get; set; } = 0;
     public float Weight { get; set; } = -1;
-	public string AttachmentsCode { get; set; } = "-1";
+	public int Chance { get; set; } = 100;
+	public List<AttachmentName> AttachmentsName { get; set; } = new() { };
 	public uint NumberOfItems { get; set; } = 1;
 	public int NumberOfUses { get; set; } = 1;
 	public bool UseGravity { get; set; } = true;
@@ -30,7 +39,7 @@ public class SerializableItemSpawnpoint : SerializableObject, IIndicatorDefiniti
 		Vector3 position = room.GetAbsolutePosition(Position);
 		Quaternion rotation = room.GetAbsoluteRotation(Rotation);
 		_prevIndex = Index;
-
+		// None Lol
 		itemSpawnPoint.transform.SetPositionAndRotation(position, rotation);
 
 		if (instance != null)
@@ -44,48 +53,50 @@ public class SerializableItemSpawnpoint : SerializableObject, IIndicatorDefiniti
 
 		for (int i = 0; i < NumberOfItems; i++)
 		{
+			if (Extensions.ReflectionExtensions.Chance(Chance) == false) continue;
+
 			Pickup pickup = null;
+			Item item = null;
 
             if (CustomItem > 0)
 			{
-                pickup = Exiled.CustomItems.API.Features.CustomItem.Get(CustomItem).Spawn(position);
+				CustomItem customItem = Exiled.CustomItems.API.Features.CustomItem.Get(CustomItem);
+
+                item = Exiled.API.Features.Items.Item.Create(customItem.Type);
+				customItem.TrackedSerials.Add(item.Serial);
+
+				if (item is Firearm firearm) firearm.AddAttachment(AttachmentsName);
+
+                pickup = customItem.Spawn(position, item, null);
 			}
 			else
 			{
 				pickup = Pickup.CreateAndSpawn(ItemType, Vector3.zero);
 			}
 			
-            //, position, rotation, Scale
-
 			pickup.Position = position;
 			pickup.Rotation = rotation;
 			pickup.Scale = Scale; 
 
             pickup.Transform.parent = itemSpawnPoint.transform;
+
 			if (Weight != -1)
 				pickup.Weight = Weight;
 
 			pickup.Rigidbody!.isKinematic = !UseGravity;
 			pickup.IsLocked = !CanBePickedUp;
+
 			PickupEventsHandler.PickupUsesLeft.Add(pickup.Serial, NumberOfUses);
 
 			pickup.Spawn();
 
-			if (pickup is FirearmPickup firearmPickup)
-			{
-				Timing.CallDelayed(0.01f, () =>
-				{
-					firearmPickup.Base.OnDistributed();
-					firearmPickup.Attachments = uint.TryParse(AttachmentsCode, out uint attachmentsCode) ? attachmentsCode : AttachmentsUtils.GetRandomAttachmentsCode(firearmPickup.Type);
-					if (firearmPickup.Base.Template.TryGetModule(out MagazineModule magazineModule))
-						magazineModule.ServerResyncData();
-				});
-			}
+			
 		}
 
 		return itemSpawnPoint.gameObject;
 	}
-	public GameObject SpawnOrUpdateIndicator(Room room, GameObject? instance = null)
+    
+    public GameObject SpawnOrUpdateIndicator(Room room, GameObject? instance = null)
 	{
 		PrimitiveObjectToy cube;
 

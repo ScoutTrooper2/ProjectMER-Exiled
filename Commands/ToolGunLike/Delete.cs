@@ -26,22 +26,37 @@ public class Delete : ICommand
 			return false;
 		}
 
-		Player? player = Player.Get(sender);
-		if (player is null)
-		{
-			response = "This command can't be run from the server console.";
-			return false;
-		}
+        Player? player = Player.Get(sender);
+        if (player is null)
+        {
+            response = "This command can't be run from the server console.";
+            return false;
+        }
 
-		if (ToolGunHandler.TryGetMapObject(player, out MapEditorObject mapEditorObject))
-		{
-			ToolGunHandler.DeleteObject(mapEditorObject);
-			response = "You've successfully deleted the object!";
+        if (arguments.Count > 0)
+        {
+            string id = arguments.At(0);
+            if (ToolGunHandler.TryGetObjectById(id, out MapEditorObject idObject))
+            {
+                ToolGunHandler.DeleteObject(idObject);
+                response = "You've successfully deleted the object!";
+                return true;
+            }
 
-			return true;
-		}
+            response = $"Unable to find object with ID of {id}!";
+            return false;
+        }
 
-		response = "You aren't looking at any Map Editor object!";
-		return false;
-	}
+        if (ToolGunHandler.TryGetMapObject(player, out MapEditorObject mapEditorObject))
+        {
+            ToolGunHandler.DeleteObject(mapEditorObject);
+            response = "You've successfully deleted the object!";
+
+            return true;
+        }
+
+        response = "You aren't looking at any Map Editor object!";
+        return false;
+
+    }
 }

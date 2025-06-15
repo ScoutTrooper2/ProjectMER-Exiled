@@ -33,6 +33,7 @@ public class ToolGunItem
         { ToolGunObjectType.Clutter, typeof(SerializableClutter) },
         { ToolGunObjectType.InvisibleTeleport, typeof(SerializableInteractableTeleport) },
         { ToolGunObjectType.Schematic, typeof(SerializableSchematic) },
+        { ToolGunObjectType.Generator, typeof(SerializableGenerator) },
     };
 
 	private ToolGunObjectType _selectedObjectToSpawn;

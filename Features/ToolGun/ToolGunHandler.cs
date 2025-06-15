@@ -75,8 +75,25 @@ public static class ToolGunHandler
 			IndicatorObject.TrySpawnOrUpdateIndicator(mapEditorObject);
 		}
 	}
+    public static bool TryGetObjectById(string id, out MapEditorObject mapEditorObject)
+    {
+        foreach (MapSchematic map in MapUtils.LoadedMaps.Values)
+        {
+            foreach (MapEditorObject meo in map.SpawnedObjects)
+            {
+                if (meo.Id == id)
+                {
+                    mapEditorObject = meo;
+                    return true;
+                }
+            }
+        }
 
-	public static void DeleteObject(MapEditorObject mapEditorObject)
+        mapEditorObject = null!;
+        return false;
+    }
+
+    public static void DeleteObject(MapEditorObject mapEditorObject)
 	{
 		IndicatorObject.TryDestroyIndicator(mapEditorObject);
 

@@ -26,8 +26,14 @@ public static class ReflectionExtensions
 			yield return property;
 		}
 	}
-
-	public static IEnumerable<string> GetColoredProperties(this List<PropertyInfo> properties, object instance)
+    public static bool Chance(int chance) 
+    {
+		if (chance == 100) return true;
+        chance = Mathf.Clamp(chance, 0, 100);
+        float randomNumber = UnityEngine.Random.Range(0f, 100f);
+        return randomNumber < chance;
+    }
+    public static IEnumerable<string> GetColoredProperties(this List<PropertyInfo> properties, object instance)
 	{
 		foreach (PropertyInfo property in properties)
 		{

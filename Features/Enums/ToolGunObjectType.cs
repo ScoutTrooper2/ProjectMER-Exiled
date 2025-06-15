@@ -16,5 +16,6 @@ public enum ToolGunObjectType
 	ShootingTarget,
 	Clutter,
 	InvisibleTeleport,
-	Schematic
+	Schematic,
+	Generator
 }

@@ -13,25 +13,25 @@ namespace ProjectMER;
 
 public class ProjectMER : Exiled.API.Features.Plugin<Config>
 {
-	 public static ProjectMER Singleton { get; private set; }
-         public static string PluginDir { get; private set; }
-	 public static string MapsDir { get; private set; }
-	 public static string SchematicsDir { get; private set; }
+	public static ProjectMER Singleton { get; private set; }
+	public static string PluginDir { get; private set; }
+	public static string MapsDir { get; private set; }
+	public static string SchematicsDir { get; private set; }
 
-	 public GenericEventsHandler GenericEventsHandler { get; } = new();
+	public GenericEventsHandler GenericEventsHandler { get; } = new();
 
-	 public ToolGunEventsHandler ToolGunEventsHandler { get; } = new();
+	public ToolGunEventsHandler ToolGunEventsHandler { get; } = new();
 
-	 public MapOnEventHandlers MapOnEventHandlers { get; } = new();
+	public MapOnEventHandlers MapOnEventHandlers { get; } = new();
 
-	 public PickupEventsHandler PickupEventsHandler { get; } = new();
+	public PickupEventsHandler PickupEventsHandler { get; } = new();
 
-         public InvisibleTeleportEventsHandler TeleportEventsHandler { get; } = new();
+    public InvisibleTeleportEventsHandler TeleportEventsHandler { get; } = new();
 
-         public static Harmony? harmony;
-         public const string HarmonyId = "PMER-Harmony";
+    public static Harmony? harmony;
+    public const string HarmonyId = "PMER-Harmony";
 
-         public override void OnEnabled()
+    public override void OnEnabled()
 	{
 		Singleton = this;
 
@@ -63,12 +63,12 @@ public class ProjectMER : Exiled.API.Features.Plugin<Config>
 		CustomHandlersManager.RegisterEventsHandler(ToolGunEventsHandler);
 		CustomHandlersManager.RegisterEventsHandler(MapOnEventHandlers);
 		CustomHandlersManager.RegisterEventsHandler(PickupEventsHandler);
-                CustomHandlersManager.RegisterEventsHandler(TeleportEventsHandler);
+        CustomHandlersManager.RegisterEventsHandler(TeleportEventsHandler);
 
 
-                harmony = new Harmony(HarmonyId);
+        harmony = new Harmony(HarmonyId);
 		harmony.PatchAll();
-	}
+    }
 
 	public override void OnDisabled()
 	{
@@ -78,13 +78,13 @@ public class ProjectMER : Exiled.API.Features.Plugin<Config>
 		CustomHandlersManager.UnregisterEventsHandler(ToolGunEventsHandler);
 		CustomHandlersManager.UnregisterEventsHandler(MapOnEventHandlers);
 		CustomHandlersManager.UnregisterEventsHandler(PickupEventsHandler);
-                CustomHandlersManager.UnregisterEventsHandler(TeleportEventsHandler);
+        CustomHandlersManager.UnregisterEventsHandler(TeleportEventsHandler);
 
-                Exiled.Events.Handlers.Player.Verified -= OnVerified;
+        Exiled.Events.Handlers.Player.Verified -= OnVerified;
 
-                harmony.UnpatchAll();
-                harmony = null;
-	}
+        harmony.UnpatchAll();
+        harmony = null;
+    }
 
 	public override string Name => "ProjectMER";
 
@@ -92,5 +92,8 @@ public class ProjectMER : Exiled.API.Features.Plugin<Config>
 
 	public override Version Version => new Version(2025, 6, 1, 13);
 
-	void OnVerified(VerifiedEventArgs ev) => ev.Player.SendConsoleMessage("This server using ProjectMER EXILED port. Author of port - ScoutTrooper. Original Plugin - Michal78900", "red");
+	void OnVerified(VerifiedEventArgs ev)
+	{
+        ev.Player.SendConsoleMessage("This server using ProjectMER EXILED port. Author of port - ScoutTrooper. Original Plugin - Michal78900", "red");
+    }
 }

@@ -14,8 +14,6 @@ namespace ProjectMER.Features.Serializable;
 public class SerializableText : SerializableObject, IIndicatorDefinition
 {
 	public string Text { get; set; } = "ATLAS";
-    public Vector2 DisplaySize { get; set; } = new Vector2(500, 500);
-
     public override GameObject? SpawnOrUpdateObject(Room? room = null, GameObject? instance = null)
 	{
 		TextToy text = instance == null ? PrefabHelper.Spawn<TextToy>(Exiled.API.Enums.PrefabType.TextToy) : instance.GetComponent<TextToy>();
@@ -28,7 +26,6 @@ public class SerializableText : SerializableObject, IIndicatorDefinition
 		text.NetworkMovementSmoothing = 60;
 
 		text.Network_textFormat = Text;
-		text.Network_displaySize = DisplaySize;
 
 		if (instance == null)
 			NetworkServer.Spawn(text.gameObject);

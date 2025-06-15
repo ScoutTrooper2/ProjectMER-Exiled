@@ -1,6 +1,7 @@
 using AdminToys;
 using Exiled.API.Features;
 using Exiled.API.Features.Pickups;
+using Exiled.API.Features.Toys;
 using Exiled.CustomItems.API.Features;
 using GameCore;
 using InventorySystem.Items.Firearms.Attachments;
@@ -61,10 +62,13 @@ public class SchematicBlockData
 		if (fallback)
 			Logger.Warn($"{BlockType} is not yet implemented. Object will be an empty GameObject instead.");
 
-        PrimitiveObjectToy primitive = PrefabHelper.Spawn<PrimitiveObjectToy>(Exiled.API.Enums.PrefabType.PrimitiveObjectToy);
+
+		Primitive primitiveExiled = Primitive.Create(null);
+        PrimitiveObjectToy primitive = primitiveExiled.Base;
         primitive.NetworkPrimitiveFlags = PrimitiveFlags.None;
 		primitive.NetworkMovementSmoothing = 60;
-
+		primitiveExiled.Spawn();
+		
 		return primitive.gameObject;
 	}
 

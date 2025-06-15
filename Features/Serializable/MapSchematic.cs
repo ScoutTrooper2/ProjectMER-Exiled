@@ -52,6 +52,8 @@ public class MapSchematic
 
     public Dictionary<string, SerializableInteractableTeleport> InvisibleTeleports { get; set; } = [];
 
+    public Dictionary<string, SerializableGenerator> Generators { get; set; } = [];
+
     public Dictionary<string, SerializableSchematic> Schematics { get; set; } = [];
 
     public List<MapEditorObject> SpawnedObjects = [];
@@ -73,7 +75,7 @@ public class MapSchematic
         Lockers.AddRange(other.Lockers);
         Pedestals.AddRange(other.Pedestals);
         InvisibleTeleports.AddRange(other.InvisibleTeleports);
-
+        Generators.AddRange(other.Generators);
 
         return this;
 	}
@@ -110,6 +112,7 @@ public class MapSchematic
         Lockers.ForEach(kVP => SpawnObject(kVP.Key, kVP.Value));
         Pedestals.ForEach(kVP => SpawnObject(kVP.Key, kVP.Value));
         InvisibleTeleports.ForEach(kVP => SpawnObject(kVP.Key, kVP.Value));
+        Generators.ForEach(kVP => SpawnObject(kVP.Key, kVP.Value));
     }
 
 	public void SpawnObject<T>(string id, T serializableObject) where T : SerializableObject
@@ -193,6 +196,8 @@ public class MapSchematic
         if (InvisibleTeleports.TryAdd(id, serializableObject))
             return true;
 
+        if (Generators.TryAdd(id, serializableObject))
+            return true;
 
         IsDirty = dirtyPrevValue;
 		return false;
@@ -246,6 +251,9 @@ public class MapSchematic
             return true;
 
         if (InvisibleTeleports.Remove(id))
+            return true;
+
+        if (Generators.Remove(id))
             return true;
 
         IsDirty = dirtyPrevValue;
